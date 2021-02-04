@@ -7,6 +7,7 @@ import LoaderButton from '../components/LoaderButton';
 import config from '../config';
 import './Articles.css';
 import { s3Upload } from '../libs/awsLib';
+import Stackedit from 'stackedit-js';
 
 export default function Article() {
   const file = useRef(null);
@@ -40,6 +41,21 @@ export default function Article() {
 
     onLoad();
   }, [id]);
+
+  function handleEdit() {
+    const stackedit = new Stackedit();
+    console.log(content);
+    stackedit.openFile({
+      content: {
+        text: content,
+      },
+    });
+
+    stackedit.on('fileChange', (file) => {
+      console.log(file.content.text);
+      setContent(file.content.text);
+    });
+  }
 
   function validateForm() {
     return content.length > 0;
@@ -143,6 +159,15 @@ export default function Article() {
             )}
             <Form.Control onChange={handleFileChange} type="file" />
           </Form.Group>
+          <LoaderButton
+            block
+            size="lg"
+            variant="warning"
+            onClick={handleEdit}
+            isLoading={false}
+          >
+            Edit
+          </LoaderButton>
           <LoaderButton
             block
             size="lg"
