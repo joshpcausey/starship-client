@@ -1,25 +1,25 @@
-import React, { useRef, useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import { API, Storage } from "aws-amplify";
-import { onError } from "../libs/errorLib";
-import Form from "react-bootstrap/Form";
-import LoaderButton from "../components/LoaderButton";
-import config from "../config";
-import "./Articles.css";
-import { s3Upload } from "../libs/awsLib";
+import React, { useRef, useState, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import { API, Storage } from 'aws-amplify';
+import { onError } from '../libs/errorLib';
+import Form from 'react-bootstrap/Form';
+import LoaderButton from '../components/LoaderButton';
+import config from '../config';
+import './Articles.css';
+import { s3Upload } from '../libs/awsLib';
 
 export default function Article() {
   const file = useRef(null);
   const { id } = useParams();
   const history = useHistory();
   const [article, setArticle] = useState(null);
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     function loadArticle() {
-      return API.get("articles", `/articles/${id}`);
+      return API.get('articles', `/articles/${id}`);
     }
 
     async function onLoad() {
@@ -46,7 +46,7 @@ export default function Article() {
   }
 
   function formatFilename(str) {
-    return str.replace(/^\w+-/, "");
+    return str.replace(/^\w+-/, '');
   }
 
   function handleFileChange(event) {
@@ -54,7 +54,7 @@ export default function Article() {
   }
 
   function saveArticle(article) {
-    return API.put("articles", `/articles/${id}`, {
+    return API.put('articles', `/articles/${id}`, {
       body: article,
     });
   }
@@ -84,7 +84,7 @@ export default function Article() {
         content,
         attachment: attachment || article.attachment,
       });
-      history.push("/");
+      history.push('/');
     } catch (e) {
       onError(e);
       setIsLoading(false);
@@ -92,14 +92,14 @@ export default function Article() {
   }
 
   function deleteArticle() {
-    return API.del("articles", `/articles/${id}`);
+    return API.del('articles', `/articles/${id}`);
   }
 
   async function handleDelete(event) {
     event.preventDefault();
 
     const confirmed = window.confirm(
-      "Are you sure you want to delete this article?"
+      'Are you sure you want to delete this article?'
     );
 
     if (!confirmed) {
@@ -110,7 +110,7 @@ export default function Article() {
 
     try {
       await deleteArticle();
-      history.push("/");
+      history.push('/');
     } catch (e) {
       onError(e);
       setIsDeleting(false);

@@ -1,10 +1,13 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
-import Home from "./containers/Home";
-import NotFound from "./containers/NotFound";
-import Login from "./containers/Login";
-import NewArticle from "./containers/NewArticle";
-import Articles from "./containers/Articles";
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import Home from './containers/Home';
+import NotFound from './containers/NotFound';
+import Login from './containers/Login';
+import NewArticle from './containers/NewArticle';
+import Articles from './containers/Articles';
+import Settings from './containers/Settings';
+import AuthenticatedRoute from './components/AuthenticatedRoute';
+import UnauthenticatedRoute from './components/UnauthenticatedRoute';
 
 export default function Routes() {
   return (
@@ -12,15 +15,18 @@ export default function Routes() {
       <Route exact path="/">
         <Home />
       </Route>
-      <Route exact path="/login">
+      <UnauthenticatedRoute exact path="/login">
         <Login />
-      </Route>
-      <Route exact path="/articles/new">
+      </UnauthenticatedRoute>
+      <AuthenticatedRoute exact path="/settings">
+        <Settings />
+      </AuthenticatedRoute>
+      <AuthenticatedRoute exact path="/articles/new">
         <NewArticle />
-      </Route>
-      <Route exact path="/articles/:id">
+      </AuthenticatedRoute>
+      <AuthenticatedRoute exact path="/articles/:id">
         <Articles />
-      </Route>
+      </AuthenticatedRoute>
       <Route>
         <NotFound />
       </Route>

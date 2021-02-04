@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import ListGroup from "react-bootstrap/ListGroup";
-import { LinkContainer } from "react-router-bootstrap";
-import { BsPencilSquare } from "react-icons/bs";
-import { API } from "aws-amplify";
-import { useAppContext } from "../libs/contextLib";
-import { onError } from "../libs/errorLib";
-import "./Home.css";
+import React, { useState, useEffect } from 'react';
+import ListGroup from 'react-bootstrap/ListGroup';
+import { LinkContainer } from 'react-router-bootstrap';
+import { BsPencilSquare } from 'react-icons/bs';
+import { API } from 'aws-amplify';
+import { useAppContext } from '../libs/contextLib';
+import { onError } from '../libs/errorLib';
+import './Home.css';
 
 export default function Home() {
   const [articles, setArticles] = useState([]);
@@ -32,7 +32,7 @@ export default function Home() {
   }, [isAuthenticated]);
 
   function loadArticles() {
-    return API.get("articles", "/articles");
+    return API.get('articles', '/articles');
   }
 
   function renderArticlesList(artilces) {
@@ -48,7 +48,7 @@ export default function Home() {
           <LinkContainer key={articleId} to={`/articles/${articleId}`}>
             <ListGroup.Item action>
               <span className="font-weight-bold">
-                {content.trim().split("\n")[0]}
+                {content.trim().split('\n')[0]}
               </span>
               <br />
               <span className="text-muted">

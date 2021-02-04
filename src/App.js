@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import "./App.css";
-import Routes from "./Routes";
-import { LinkContainer } from "react-router-bootstrap";
-import { AppContext } from "./libs/contextLib";
-import { Auth } from "aws-amplify";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import './App.css';
+import Routes from './Routes';
+import { LinkContainer } from 'react-router-bootstrap';
+import { AppContext } from './libs/contextLib';
+import { Auth } from 'aws-amplify';
+import { useHistory } from 'react-router-dom';
 
 function App() {
   const history = useHistory();
@@ -22,7 +22,7 @@ function App() {
       await Auth.currentSession();
       userHasAuthenticated(true);
     } catch (e) {
-      if (e !== "No current user") {
+      if (e !== 'No current user') {
         alert(e);
       }
     }
@@ -33,7 +33,7 @@ function App() {
   async function handleLogout() {
     await Auth.signOut();
     userHasAuthenticated(false);
-    history.push("/login");
+    history.push('/login');
   }
 
   return (
@@ -49,7 +49,12 @@ function App() {
           <Navbar.Collapse className="justify-content-end">
             <Nav activeKey={window.location.pathname}>
               {isAuthenticated ? (
-                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                <>
+                  <LinkContainer to="/settings">
+                    <Nav.Link>Settings</Nav.Link>
+                  </LinkContainer>
+                  <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                </>
               ) : (
                 <>
                   <LinkContainer to="/login">

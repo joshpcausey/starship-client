@@ -1,17 +1,17 @@
-import React, { useRef, useState } from "react";
-import Form from "react-bootstrap/Form";
-import { useHistory } from "react-router-dom";
-import LoaderButton from "../components/LoaderButton";
-import { onError } from "../libs/errorLib";
-import config from "../config";
-import { API } from "aws-amplify";
-import { s3Upload } from "../libs/awsLib";
-import "./NewArticle.css";
+import React, { useRef, useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import { useHistory } from 'react-router-dom';
+import LoaderButton from '../components/LoaderButton';
+import { onError } from '../libs/errorLib';
+import config from '../config';
+import { API } from 'aws-amplify';
+import { s3Upload } from '../libs/awsLib';
+import './NewArticle.css';
 
 export default function NewArticle() {
   const file = useRef(null);
   const history = useHistory();
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   function validateForm() {
@@ -40,7 +40,7 @@ export default function NewArticle() {
       const attachment = file.current ? await s3Upload(file.current) : null;
 
       await createArticle({ content, attachment });
-      history.push("/");
+      history.push('/');
     } catch (e) {
       onError(e);
       setIsLoading(false);
@@ -48,7 +48,7 @@ export default function NewArticle() {
   }
 
   function createArticle(article) {
-    return API.post("articles", "/articles", {
+    return API.post('articles', '/articles', {
       body: article,
     });
   }
