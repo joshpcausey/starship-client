@@ -3,6 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { API, Storage } from 'aws-amplify';
 import { onError } from '../libs/errorLib';
 import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
 import LoaderButton from '../components/LoaderButton';
 import config from '../config';
 import './Articles.css';
@@ -16,8 +17,14 @@ export default function Article() {
   const history = useHistory();
   const [article, setArticle] = useState(null);
   const [content, setContent] = useState('');
+  const [isEdited, setIsEdited] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    if (content && article && article.content !== content) setIsEdited(true);
+    else setIsEdited(false);
+  }, [content, article]);
 
   useEffect(() => {
     function loadArticle() {
@@ -138,6 +145,12 @@ export default function Article() {
     <div className="Articles">
       {article && (
         <Form onSubmit={handleSubmit}>
+          {isEdited && (
+            <Alert variant="danger">
+              You have unsaved changes! To save changes made in the markdown
+              editor press the blue save button at the bottom of this page.
+            </Alert>
+          )}
           <ReactMarkdown className="markdown-preview" source={content} />
           <Form.Group controlId="file">
             <Form.Label>Attachment</Form.Label>
