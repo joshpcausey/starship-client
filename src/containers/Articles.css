@@ -2,3 +2,8 @@
   height: 300px;
   font-size: 1.5rem;
 }
+
+.markdown-preview {
+  max-width: 670px;
+  justify-content: center;
+}

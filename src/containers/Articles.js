@@ -8,6 +8,7 @@ import config from '../config';
 import './Articles.css';
 import { s3Upload } from '../libs/awsLib';
 import Stackedit from 'stackedit-js';
+import ReactMarkdown from 'react-markdown';
 
 export default function Article() {
   const file = useRef(null);
@@ -137,13 +138,7 @@ export default function Article() {
     <div className="Articles">
       {article && (
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="content">
-            <Form.Control
-              as="textarea"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-            />
-          </Form.Group>
+          <ReactMarkdown className="markdown-preview" source={content} />
           <Form.Group controlId="file">
             <Form.Label>Attachment</Form.Label>
             {article.attachment && (
